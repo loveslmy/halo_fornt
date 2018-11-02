@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs3 d-flex>
-        <category v-bind:items="datas"></category>
+        <category :datas="datas"></category>
       </v-flex>
       <v-flex xs9>
         <v-container fluid my-0 py-0>
@@ -81,41 +81,43 @@
 </template>
 
 <script>
-  import Category from '@/components/Category'
+import Category from "@/components/Category";
 
-  export default {
-    data: () => ({
-      datas: [
-        {
-          icon: 'far fa-clock',
-          text: 'TimeLine',
-          model: true,
-          children: [
-            {
-              icon: 'fab fa-qq',
-              text: '2018',
-              model: true,
-              children: [{
-                icon: 'fa-qq',
-                text: '12',
-              }]
-            },
-            {icon: 'fa-telegram', text: '2017'}
-          ]
-        },
-        {
-          icon: 'fas fa-atom',
-          text: 'Technologies',
-          model: true,
-          children: [
-            {icon: 'fab fa-java', text: 'Java'},
-            {icon: 'fab fa-linux', text: 'Linux'}
-          ]
-        }
-      ]
-    }),
-    components: {
-      'category': Category
-    }
+export default {
+  data: () => ({
+    datas: [
+      {
+        icon: "far fa-clock",
+        name: "TimeLine",
+        expanded: true,
+        children: [
+          {
+            icon: "fab fa-qq",
+            name: "2018",
+            expanded: true,
+            children: [
+              {
+                icon: "fa-qq",
+                name: "12"
+              }
+            ]
+          },
+          { icon: "fa-telegram", name: "2017" }
+        ]
+      },
+      {
+        icon: "fas fa-atom",
+        name: "Technologies",
+        expanded: true,
+        children: [
+          { icon: "fab fa-java", name: "Java" },
+          { icon: "fab fa-linux", name: "Linux" }
+        ]
+      }
+    ]
+  }),
+  components: {
+    category: Category
   }
+};
 </script>

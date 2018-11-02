@@ -22,6 +22,7 @@
     </v-toolbar>
     <v-container fluid my-5>
       <router-view></router-view>
+      <router-view name="site"></router-view>
       <router-view name="post"></router-view>
       <router-view name="album"></router-view>
       <router-view name="video"></router-view>
@@ -31,46 +32,46 @@
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 
-  export default {
-    name: "Home",
-    data: () => ({
-      dialog: false,
-      items: [],
-      mail: "liumy2009@126.com",
-      qq: "39191941"
-    }),
-    computed: {
-      sendMail: function () {
-        return "mailto:" + this.mail;
-      },
-      addQQ: function () {
-        return (
-          "tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=" +
-          this.qq +
-          "&website=www.oicqzone.com"
-        );
-      }
+export default {
+  name: "Home",
+  data: () => ({
+    dialog: false,
+    items: [],
+    mail: "liumy2009@126.com",
+    qq: "39191941"
+  }),
+  computed: {
+    sendMail: function() {
+      return "mailto:" + this.mail;
     },
-    methods: {
-      loadMenus() {
-        axios
-          .get("/api/menus/findByParentId", {
-            params: {
-              parentId: 0
-            }
-          })
-          .then(response => {
-            this.items = response.data.datas;
-          })
-          .catch(error => {
-            alert(error);
-          });
-      }
-    },
-    created: function () {
-      this.loadMenus();
+    addQQ: function() {
+      return (
+        "tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=" +
+        this.qq +
+        "&website=www.oicqzone.com"
+      );
     }
-  };
+  },
+  methods: {
+    loadMenus() {
+      axios
+        .get("/api/menus/findByParentId", {
+          params: {
+            parentId: 0
+          }
+        })
+        .then(response => {
+          this.items = response.data.datas;
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
+  },
+  created: function() {
+    this.loadMenus();
+  }
+};
 </script>

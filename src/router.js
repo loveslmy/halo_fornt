@@ -13,6 +13,7 @@ export default new Router({
         {
           path: '',
           components: {
+            site: () => import('./views/front/site/SiteIndex.vue'),
             post: () => import('./views/front/post/PostIndex.vue'),
             album: () => import('./views/front/album/AlbumIndex.vue'),
             video: () => import('./views/front/video/VideoIndex.vue')
@@ -25,6 +26,10 @@ export default new Router({
         {
           path: 'album',
           component: () => import('./views/front/album/AlbumIndex.vue')
+        },
+        {
+          path: 'site',
+          component: () => import('./views/front/site/SiteIndex.vue')
         }
       ]
     },
@@ -35,6 +40,10 @@ export default new Router({
         {
           path: 'menu',
           component: () => import('./views/admin/menu/MenuManage.vue')
+        },
+        {
+          path: 'category',
+          component: () => import('./views/admin/category/CategoryManage.vue')
         }
       ]
     }

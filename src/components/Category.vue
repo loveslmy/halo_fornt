@@ -1,35 +1,35 @@
 <template>
   <v-list dense expand subheader>
-    <template v-for="item in items">
-      <v-list-group v-if="item.children" v-model="item.model" :key="item.text">
+    <template v-for="item in datas">
+      <v-list-group v-if="item.children.length > 0" v-model="item.expanded" :key="item.name">
         <v-list-tile slot="activator">
           <v-list-tile-content>
-            <v-list-tile-title class="subheading">
+            <v-list-tile-title class="subheading" @click="go(item.url)">
               <v-icon>{{ item.icon }}</v-icon>
               <span style="margin-left:15px;" class="font-weight-black font-italic">
-                                {{ item.text }}
-                            </span>
+                {{ item.name }}
+              </span>
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-for="(child, i) in item.children" :key="i" @click="sayHello">
+        <v-list-tile v-for="(child, i) in item.children" :key="i" @click="go(child.url)">
           <v-list-tile-action v-if="child.icon">
             <v-icon>{{ child.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>
-              {{ child.text }}
+              {{ child.name }}
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list-group>
-      <v-list-tile v-else :key="item.text">
+      <v-list-tile v-else :key="item.name" @click="go(item.url)">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>
-            {{ item.text }}
+            {{ item.name }}
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -38,12 +38,12 @@
 </template>
 
 <script>
-  export default {
-    props: ['items'],
-    methods: {
-      sayHello: function () {
-        alert("hello!");
-      }
+export default {
+  props: ["datas"],
+  methods: {
+    go: function(url) {
+      this.$router.push({ path: url });
     }
   }
+};
 </script>
