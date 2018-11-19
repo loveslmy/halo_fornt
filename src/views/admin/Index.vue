@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" clipped fixed app>
+    <v-snackbar v-model="snackbar" top auto-height vertical :timeout="8000">
+      <p>{{message}}</p>
+      <v-btn dark flat @click="snackbar = false">close</v-btn>
+    </v-snackbar>   
+    <v-navigation-drawer v-model="drawer" clipped app floating width="200">
       <v-list dense>
         <v-list-tile v-for="item in items" :key="item.id" :to="item.url">
           <v-list-tile-action>
@@ -25,38 +29,44 @@
         </v-layout>
       </v-container>
     </v-content>
-    <site-footer/>
+    <site-footer />
   </div>
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 
-  export default {
-    name: "Console",
-    data: () => ({
-      drawer: null,
-      items: []
-    }),
-    methods: {
-      loadMenus() {
-        axios
-          .get("/api/menus/findByParentId", {
-            params: {
-              parentId: -1
-            }
-          })
-          .then(response => {
-            this.items = response.data.datas;
-          })
-          .catch(error => {
-            // eslint-disable-next-line
-            console.log(error.response.status + ":" + error.response.data);
-          });
-      }
+export default {
+  name: "Console",
+  data: () => ({
+    snackbar: false,
+    message: "",
+    drawer: false,
+    items: []
+  }),
+  methods: {
+    showSnakbar: function(msg) {
+      this.snackbar = true;
+      this.message = msg;
     },
-    created: function () {
-      this.loadMenus();
+    loadMenus: function() {
+      axios
+        .get("/api/menu/findByParentId", {
+          params: {
+            parentId: -1
+          }
+        })
+        .then(response => {
+          this.items = response.data.datas;
+        })
+        .catch(error => {
+          this.message = error.response.status + ":" + error.response.data;
+          this.snackbar = true;
+        });
     }
-  };
+  },
+  created: function() {
+    this.loadMenus();
+  }
+};
 </script>

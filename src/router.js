@@ -44,6 +44,18 @@ export default new Router({
         {
           path: 'category',
           component: () => import('./views/admin/category/CategoryManage.vue')
+        },
+        {
+          path: 'image',
+          component: () => import('./views/admin/image/ImageManage.vue')
+        },
+        {
+          path: 'site',
+          component: () => import('./views/admin/site/SiteManage.vue')
+        },
+        {
+          path: 'treeview',
+          component: () => import('./components/base/TreeSelect.vue')
         }
       ]
     }

@@ -1,10 +1,10 @@
 <template>
-  <manage :barTitle="'菜单列表'" 
+  <manage :tableTitle="'菜单列表'" 
   :headers="headers" 
   :editedItem="editedItem" 
   :defaultItem="defaultItem"
-  :queryUrl="'/api/menus/listMenu'"
-  :saveUrl="'/api/menus/saveOrModify'" /> 
+  :queryUrl="'/api/menu/listMenu'"
+  :saveUrl="'/api/menu/saveOrModify'" /> 
 </template>  
 <script>
 import Manage from "@/components/Manage";
@@ -14,6 +14,7 @@ export default {
   },
   data: () => ({
     headers: [
+      { text: "操作", value: "op", sortable: false },
       { text: "ID", value: "id" },
       {
         text: "菜单名称",
@@ -22,6 +23,12 @@ export default {
         validate: "required|max:16",
         canEdit: true,
         required: true
+      },
+      {
+        text: "序 号",
+        value: "orderSeq",
+        validate: "numeric",
+        canEdit: true
       },
       { text: "上级ID", value: "parentId", canEdit: true },
       {
@@ -55,25 +62,7 @@ export default {
         ],
         canEdit: true
       },
-      {
-        type: "select",
-        text: "打开方式",
-        value: "target",
-        options: [
-          { text: "新建窗口", value: "BLANK" },
-          { text: "当前窗口", value: "SELF" },
-          { text: "父窗口", value: "PARENT" },
-          { text: "顶级窗口", value: "TOP" }
-        ],
-        canEdit: true
-      },
-      {
-        text: "显示序号",
-        value: "orderSeq",
-        validate: "numeric",
-        canEdit: true
-      },
-      { text: "操作", value: "" }
+      { text: "更新时间", value: "updDate" }
     ],
     datas: [],
     editedItem: {
@@ -83,7 +72,8 @@ export default {
       url: "",
       expanded: true,
       orderSeq: 0,
-      target: "BLANK"
+      target: "BLANK",
+      active: true
     },
     defaultItem: {
       name: "",
@@ -92,7 +82,8 @@ export default {
       url: "",
       expanded: true,
       orderSeq: 0,
-      target: "BLANK"
+      target: "BLANK",
+      active: true
     }
   })
 };

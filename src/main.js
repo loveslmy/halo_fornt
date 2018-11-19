@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import SiteFooter from '@/components/base/SiteFooter'
 import zh_CN from 'vee-validate/dist/locale/zh_CN'
 import VeeValidate, { Validator } from 'vee-validate'
+
 Vue.config.productionTip = false
 
 const config = {
@@ -26,12 +27,10 @@ const config = {
   validity: false
 };
 
-
-Vue.use(VeeValidate,config);
+Vue.use(VeeValidate, config);
 Vue.component("site-footer", SiteFooter);
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('zh_CN', zh_CN);
-
 
 new Vue({
   router,

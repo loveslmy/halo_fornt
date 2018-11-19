@@ -57,7 +57,7 @@ export default {
   methods: {
     loadMenus() {
       axios
-        .get("/api/menus/findByParentId", {
+        .get("/api/menu/findByParentId", {
           params: {
             parentId: 0
           }

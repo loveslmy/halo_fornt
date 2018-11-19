@@ -15,7 +15,7 @@ Vue.use(Vuetify, {
   },
   iconfont: 'fa',
   lang: {
-    locales: {zhHans},
+    locales: { 'zh-Hans': zhHans },
     current: 'zh-Hans'
   },
 })
