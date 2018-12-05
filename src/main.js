@@ -8,8 +8,8 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import SiteFooter from '@/components/base/SiteFooter'
 import zh_CN from 'vee-validate/dist/locale/zh_CN'
 import VeeValidate, { Validator } from 'vee-validate'
-
-Vue.config.productionTip = false
+import axios from "@/util/Http";
+import MessageBox from "@/util/Message";
 
 const config = {
   aria: true,
@@ -29,9 +29,11 @@ const config = {
 
 Vue.use(VeeValidate, config);
 Vue.component("site-footer", SiteFooter);
+Vue.config.productionTip = false;
+Vue.prototype.$http = axios;
+Vue.prototype.$message = MessageBox;
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('zh_CN', zh_CN);
-
 new Vue({
   router,
   store,

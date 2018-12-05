@@ -1,18 +1,23 @@
 <template>
   <v-layout row wrap>
-    <data-table :tableTitle="tableTitle" 
-      :headers="headers" :datas="datas" @newItem="newItem" 
-      @editItem="editItem" @loadData="loadData"></data-table>
+    <data-table
+      :tableTitle="tableTitle"
+      :headers="headers"
+      :datas="datas"
+      @newItem="newItem"
+      @editItem="editItem"
+      @loadData="loadData"
+    ></data-table>
     <v-dialog persistent v-model="dialog" max-width="60%">
       <v-card>
         <v-card-title>
-            <span class="headline">{{ formTitle }}</span>
+          <span class="headline">{{ formTitle }}</span>
         </v-card-title>
         <v-card-text>
-            <auto-form v-if="dialog" :headers="headers" :editedItem="editedItem"></auto-form>
+          <auto-form v-if="dialog" :headers="headers" :editedItem="editedItem"></auto-form>
         </v-card-text>
         <v-card-actions>
-        <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="save">保存</v-btn>
           <v-btn color="blue darken-1" flat @click.native="close">取消</v-btn>
         </v-card-actions>
@@ -24,8 +29,7 @@
 <script>
 import AutoForm from "@/components/base/AutoForm";
 import DataTable from "@/components/base/DataTable";
-import Message from "@/util/Message";
-import axios from "axios";
+import Validate from "@/util/Validate";
 export default {
   created: function() {
     this.loadData();
@@ -33,9 +37,6 @@ export default {
   components: {
     "data-table": DataTable,
     "auto-form": AutoForm
-  },
-  $_veeValidate: {
-    validator: "new"
   },
   data: () => ({
     datas: [],
@@ -58,13 +59,13 @@ export default {
   },
   methods: {
     loadData: function() {
-      axios
+      this.$http
         .get(this.queryUrl, { params: this.queryParam })
         .then(response => {
           this.datas = response.data.datas;
         })
         .catch(error => {
-          Message.showMsg(this, error.response.data);
+          this.$message.showMsg(this, error.response.data);
         });
     },
     newItem: function() {
@@ -80,28 +81,26 @@ export default {
     close: function() {
       this.dialog = false;
     },
-    save() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          axios
-            .post(this.saveUrl, this.editedItem)
-            .then(response => {
-              if (response.data.status === "OK") {
-                this.editedItem = response.data.datas;
-                if (this.newOp) {
-                  this.datas.push(this.editedItem);
-                }
-                this.close();
-                Message.showMsg(this, "操作成功!");
-              } else {
-                Message.showMsg(this, response.data.msg);
+    async save() {
+      if (await Validate.validate(this.$validator, this.headers)) {
+        this.$http
+          .post(this.saveUrl, this.editedItem)
+          .then(response => {
+            if (response.data.status === "OK") {
+              this.editedItem = response.data.datas;
+              if (this.newOp) {
+                this.datas.push(this.editedItem);
               }
-            })
-            .catch(error => {
-              Message.showMsg(this, error.message);
-            });
-        }
-      });
+              this.close();
+              this.$message.showMsg(this, "操作成功!");
+            } else {
+              this.$message.showMsg(this, response.data.msg);
+            }
+          })
+          .catch(error => {
+            this.$message.showMsg(this, error.message);
+          });
+      }
     }
   }
 };

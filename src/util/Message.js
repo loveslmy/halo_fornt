@@ -6,10 +6,17 @@
  */
 export default {
     showMsg: function (comp, msg) {
+        if (comp.snackbar != undefined) {
+            comp.message = msg;
+            comp.snackbar = true;
+            return;
+        }
+
         let parent = comp.$parent;
         while (parent) {
-            if (parent.showSnakbar) {
-                parent.showSnakbar(msg);
+            if (parent.snackbar != undefined) {
+                parent.message = msg;
+                parent.snackbar = true;
                 break;
             }
             parent = parent.$parent;

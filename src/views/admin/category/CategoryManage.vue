@@ -1,10 +1,11 @@
 <template>
-  <manage :tableTitle="'分类列表'" 
-  :headers="headers" 
-  :editedItem="editedItem" 
-  :defaultItem="defaultItem"
-  :queryUrl="'/api/category/listCategory'"
-  :saveUrl="'/api/category/saveOrModify'" /> 
+  <manage
+    :tableTitle="'分类列表'"
+    :headers="headers"
+    :defaultItem="defaultItem"
+    :queryUrl="'/api/category/listCategory'"
+    :saveUrl="'/api/category/saveOrModify'"
+  />
 </template>  
 <script>
 import Manage from "@/components/Manage";
@@ -71,15 +72,6 @@ export default {
       { text: "更新时间", value: "updDate" }
     ],
     datas: [],
-    editedItem: {
-      name: "",
-      parentId: null,
-      icon: "",
-      url: "",
-      expanded: true,
-      orderSeq: 0,
-      active: true
-    },
     defaultItem: {
       name: "",
       parentId: null,

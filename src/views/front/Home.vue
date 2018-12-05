@@ -1,5 +1,9 @@
 <template>
   <div>
+    <v-snackbar v-model="snackbar" top auto-height vertical :timeout="8000">
+      <p>{{message}}</p>
+      <v-btn dark flat @click="snackbar = false">close</v-btn>
+    </v-snackbar>
     <v-toolbar fixed>
       <v-toolbar-title>
         <v-btn icon large>
@@ -7,9 +11,10 @@
             <img src="@/assets/logo.png" alt="Jack.Liu Website">
           </v-avatar>
         </v-btn>
-        <span class="hidden-sm-and-down font-weight-black">Jack.Liu</span><span> Official Site</span>
+        <span class="hidden-sm-and-down font-weight-black">Jack.Liu</span>
+        <span>&nbsp;Official Site</span>
       </v-toolbar-title>
-      <v-btn v-for="item in items" :key="item.id" :to="item.url" medium flat>
+      <v-btn v-for="item in menus" :key="item.id" :to="item.url" medium flat>
         <span class="font-weight-black">{{ item.name }}</span>
       </v-btn>
       <v-spacer></v-spacer>
@@ -37,8 +42,10 @@ import axios from "axios";
 export default {
   name: "Home",
   data: () => ({
+    snackbar: false,
+    message: "",
     dialog: false,
-    items: [],
+    menus: [],
     mail: "liumy2009@126.com",
     qq: "39191941"
   }),
@@ -59,14 +66,17 @@ export default {
       axios
         .get("/api/menu/findByParentId", {
           params: {
-            parentId: 0
+            parentId: 2
           }
         })
         .then(response => {
-          this.items = response.data.datas;
+          this.menus = response.data.datas;
         })
         .catch(error => {
-          alert(error);
+          this.$message.showMsg(
+            this,
+            error.response.status + ":" + error.response.data
+          );
         });
     }
   },

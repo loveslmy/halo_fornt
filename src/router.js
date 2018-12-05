@@ -54,8 +54,16 @@ export default new Router({
           component: () => import('./views/admin/site/SiteManage.vue')
         },
         {
-          path: 'treeview',
-          component: () => import('./components/base/TreeSelect.vue')
+          path: 'postlist',
+          component: () => import('./views/admin/post/List.vue')
+        },
+        {
+          path: 'postedit',
+          component: () => import('./views/admin/post/Edit.vue')
+        },
+        {
+          path: 'tag',
+          component: () => import('./views/admin/tag/TagManage.vue'),
         }
       ]
     }
