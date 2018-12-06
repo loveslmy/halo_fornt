@@ -22,12 +22,6 @@
             <v-icon small>{{ props.item[headers[index].value] }}</v-icon>
           </template>
           <template v-else-if="header.value=='op'">
-            <v-icon
-              v-if="showOp"
-              small
-              class="mr-2"
-              @click="$emit('showItem',props.item)"
-            >fa fa-info</v-icon>&nbsp;
             <v-icon small class="mr-2" @click="$emit('editItem',props.item)">fas fa-edit</v-icon>
           </template>
           <span v-else>{{ props.item[headers[index].value] }}</span>
@@ -43,7 +37,7 @@
 export default {
   data: () => ({
     page: {
-      rowsPerPage: 25
+      rowsPerPage: 10
     },
     search: ""
   }),

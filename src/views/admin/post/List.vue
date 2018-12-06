@@ -40,7 +40,7 @@
       </v-card>
     </v-flex>
   </v-layout>
-</template>  
+</template>
 <script>
 import Category from "@/components/Category";
 export default {
@@ -125,10 +125,14 @@ export default {
           this.categories = response.data.datas;
         })
         .catch(error => {
-          this.$message.showMsg(
-            this,
-            error.response.status + ":" + error.response.data
-          );
+            if (error.response !== undefined) {
+                this.$message.showMsg(
+                    this,
+                    error.response.status + ":" + error.response.data
+                );
+            } else {
+                this.$message.showMsg(this, error);
+            }
         });
     }
   },

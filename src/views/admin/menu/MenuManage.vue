@@ -1,9 +1,9 @@
 <template>
   <manage
-    :tableTitle="'菜单列表'"
+    :tableTitle="this.$route.params.parentId==1?'控制台菜单列表':'网站菜单列表'"
     :headers="headers"
     :defaultItem="defaultItem"
-    :queryUrl="'/api/menu/listMenu'"
+    :queryUrl="'/api/menu/listMenu?parentId='+this.$route.params.parentId"
     :saveUrl="'/api/menu/saveOrModify'"
   />
 </template>  

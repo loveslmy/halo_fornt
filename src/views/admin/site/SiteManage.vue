@@ -45,16 +45,15 @@
       </v-card>
     </v-dialog>
     <data-table
-      tableTitle="站点列表"
+      tableTitle="收藏站点列表"
       :headers="headers"
       :datas="sites"
-      :showOp="true"
       @newItem="newItem"
       @editItem="editItem"
       @loadData="loadSites"
     ></data-table>
   </v-layout>
-</template>  
+</template>
 
 <script>
 import AutoForm from "@/components/base/AutoForm";
@@ -128,7 +127,7 @@ export default {
           this.sites = response.data.datas;
         })
         .catch(error => {
-          this.$message.showMsg(this, error.response.data);
+            this.$message.showMsg(this, error);
         });
     },
     loadCategories: function(item) {
@@ -151,10 +150,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$message.showMsg(
-            this,
-            error.response.status + ":" + error.response.data
-          );
+            this.$message.showMsg(this, error);
         });
     },
     close: function() {
@@ -175,7 +171,7 @@ export default {
           this.totalPages = pageable.totalPages;
         })
         .catch(error => {
-          this.$message.showMsg(this, error.response.data);
+            this.$message.showMsg(this, error);
         });
     },
     save: function() {
@@ -194,7 +190,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$message.showMsg(this, error.message);
+            this.$message.showMsg(this, error);
         });
       this.dialog = false;
     }

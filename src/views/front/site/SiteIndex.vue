@@ -55,7 +55,7 @@ export default {
           this.sites = response.data.datas;
         })
         .catch(error => {
-          this.$message.showMsg(error.response);
+            this.$message.showMsg(this, error);
         });
     }
   }

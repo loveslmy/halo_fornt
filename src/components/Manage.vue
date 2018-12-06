@@ -34,6 +34,11 @@ export default {
   created: function() {
     this.loadData();
   },
+  watch: {
+    queryUrl: function() {
+      this.loadData();
+    }
+  },
   components: {
     "data-table": DataTable,
     "auto-form": AutoForm
@@ -60,12 +65,12 @@ export default {
   methods: {
     loadData: function() {
       this.$http
-        .get(this.queryUrl, { params: this.queryParam })
+        .get(this.queryUrl)
         .then(response => {
           this.datas = response.data.datas;
         })
         .catch(error => {
-          this.$message.showMsg(this, error.response.data);
+            this.$message.showMsg(this, error);
         });
     },
     newItem: function() {
@@ -98,7 +103,7 @@ export default {
             }
           })
           .catch(error => {
-            this.$message.showMsg(this, error.message);
+              this.$message.showMsg(this, error);
           });
       }
     }

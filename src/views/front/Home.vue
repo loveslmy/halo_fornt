@@ -73,10 +73,7 @@ export default {
           this.menus = response.data.datas;
         })
         .catch(error => {
-          this.$message.showMsg(
-            this,
-            error.response.status + ":" + error.response.data
-          );
+            this.$message.showMsg(this, error);
         });
     }
   },

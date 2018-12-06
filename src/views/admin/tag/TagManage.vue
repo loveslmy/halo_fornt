@@ -1,6 +1,6 @@
 <template>
   <manage
-    :tableTitle="'标签列表'"
+    :tableTitle="'文章标签列表'"
     :headers="headers"
     :defaultItem="defaultItem"
     :queryUrl="'/api/tag/listTag'"

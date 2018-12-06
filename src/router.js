@@ -38,11 +38,11 @@ export default new Router({
       component: () => import('./views/admin/Index.vue'),
       children: [
         {
-          path: 'menu',
+          path: 'menu/:parentId',
           component: () => import('./views/admin/menu/MenuManage.vue')
         },
         {
-          path: 'category',
+          path: 'category/:parentId',
           component: () => import('./views/admin/category/CategoryManage.vue')
         },
         {
@@ -50,15 +50,15 @@ export default new Router({
           component: () => import('./views/admin/image/ImageManage.vue')
         },
         {
-          path: 'site',
+          path: 'site-list',
           component: () => import('./views/admin/site/SiteManage.vue')
         },
         {
-          path: 'postlist',
+          path: 'post-list',
           component: () => import('./views/admin/post/List.vue')
         },
         {
-          path: 'postedit',
+          path: 'post-edit/:postId',
           component: () => import('./views/admin/post/Edit.vue')
         },
         {

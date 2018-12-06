@@ -54,7 +54,7 @@ export default {
           this.totalPages = pageable.totalPages;
         })
         .catch(error => {
-          this.$message.showMsg(this, error.response.data);
+            this.$message.showMsg(this, error);
         });
     }
   },

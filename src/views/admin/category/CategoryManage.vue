@@ -1,10 +1,10 @@
 <template>
   <manage
-    :tableTitle="'分类列表'"
+    :tableTitle="this.$route.params.parentId==1?'文章分类列表':'收藏站点分类列表'"
     :headers="headers"
     :defaultItem="defaultItem"
-    :queryUrl="'/api/category/listCategory'"
-    :saveUrl="'/api/category/saveOrModify'"
+    :queryUrl="'/api/category/listCategory?parentId='+this.$route.params.parentId"
+    saveUrl="/api/category/saveOrModify"
   />
 </template>  
 <script>

@@ -5,7 +5,7 @@
       <v-btn dark flat @click="snackbar = false">close</v-btn>
     </v-snackbar>
     <v-navigation-drawer v-model="drawer" app fixed clipped floating width="230">
-      <v-list>
+      <v-list expand>
         <v-list-group
           v-for="menu in menus"
           v-model="menu.active"
@@ -84,10 +84,7 @@ export default {
           this.menus = response.data.datas;
         })
         .catch(error => {
-          this.$message.showMsg(
-            this,
-            error.response.status + ":" + error.response.data
-          );
+            this.$message.showMsg(this, error);
         });
     }
   },
