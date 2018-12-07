@@ -142,6 +142,8 @@
             :ishljs="true"
             :externalLink="externalLink"
             :toolbars="toolbars"
+            @imgAdd="$imgAdd"
+            ref="md"
           ></mavon-editor>
         </div>
       </v-card>
@@ -166,7 +168,6 @@ export default {
     title: "",
     isLoading: false,
     dialogMode: false,
-    md: mavonEditor,
     codeStyle: "idea",
     externalLink: {
       markdown_css: function() {
@@ -278,7 +279,7 @@ export default {
     }
   }),
   watch: {
-    $route(to, from) {
+    $route(to) {
       if (to.params.postId == 0) {
         this.title = "新增文章";
       } else {
@@ -304,6 +305,27 @@ export default {
     this.loadTags();
   },
   methods: {
+    $imgAdd: function(pos, $file) {
+      let formdata = new FormData();
+      formdata.append("file", $file);
+      formdata.append("thumbnail", false);
+      formdata.append("token", "abc");
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+      this.$http
+        .post("/api/file/upload/image", formdata, config)
+        .then(response => {
+          if (response.data.status === "OK") {
+            this.$refs.md.$img2Url(
+              pos,
+              "/api/file/loadImage/" + response.data.datas.id
+            );
+          } else {
+            this.$message.showMsg(this, "上传失败,请检查网络连接!");
+          }
+        });
+    },
     switchImg: function() {
       this.dialogMode = true;
     },
@@ -364,7 +386,7 @@ export default {
           }
         })
         .catch(error => {
-            this.$message.showMsg(this, error);
+          this.$message.showMsg(this, error);
         });
     },
     loadTags: function() {

@@ -55,7 +55,7 @@ export default new Router({
         },
         {
           path: 'post-list',
-          component: () => import('./views/admin/post/List.vue')
+          component: () => import('./views/admin/post/PostStatusTab.vue')
         },
         {
           path: 'post-edit/:postId',
